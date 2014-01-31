@@ -6,10 +6,14 @@
   , toProjection = new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
   , markerSize = new OpenLayers.Size(21,25)
   , markerOffset = new OpenLayers.Pixel(-(markerSize.w/2), -markerSize.h)
-  , pizzaMarker = new OpenLayers.Icon('marker.png', markerSize, markerOffset);
+  , pizzaIcon = new OpenLayers.Icon('marker.png', markerSize, markerOffset);
 
-  var lonLat = new OpenLayers.LonLat(-73.959618, 40.79016).transform(fromProjection, toProjection);
-  markersLayer.addMarker(new OpenLayers.Marker(lonLat, pizzaMarker));
+  var i, pizzerias = window.pizzerias;
+  for (i = 0; i < pizzerias.length; i++) {
+    var shop = pizzerias[i]
+    var lonLat = new OpenLayers.LonLat(shop.lng, shop.lat).transform(fromProjection, toProjection);
+    markersLayer.addMarker(new OpenLayers.Marker(lonLat, pizzaIcon.clone()));
+  }
 
   map.addLayer(new OpenLayers.Layer.OSM());
   map.addLayer(markersLayer);
