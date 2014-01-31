@@ -15,7 +15,8 @@
     markersLayer.addMarker(new OpenLayers.Marker(lonLat, pizzaIcon.clone()));
   }
 
-  map.addLayer(new OpenLayers.Layer.OSM());
+  map.addLayer(new OpenLayers.Layer.Google("Google Hybrid",
+    {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}));
   map.addLayer(markersLayer);
 
   map.setCenter(lonLat, zoom);
