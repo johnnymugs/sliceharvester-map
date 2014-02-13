@@ -41,6 +41,7 @@
         , pizzaIcon // anchor
         , true // show X close button
       );
+      popup.maxSize = new OpenLayers.Size(250,450);
 
       map.addPopup(popup);
     });
