@@ -29,9 +29,8 @@
   map.addLayer(new OpenLayers.Layer.Google("GMaps", { type: google.maps.MapTypeId.ROADMAP, numZoomLevels: 20 }));
   map.addLayer(markersLayer);
 
-  var stupidShop = pizzerias[0];
-  var stupidLonLat = new OpenLayers.LonLat(stupidShop.lng, stupidShop.lat).transform(fromProjection, toProjection)
-   map.setCenter(stupidLonLat, zoom);
+  var timesSqLonLat = new OpenLayers.LonLat(-73.987386, 40.755166).transform(fromProjection, toProjection);
+  map.setCenter(timesSqLonLat, zoom);
 
   return 'fuck yeah';
 
