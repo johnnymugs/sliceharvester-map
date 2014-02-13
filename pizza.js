@@ -18,9 +18,11 @@
     , stupidBaseStyle = 'position:relative;width:21px;height:25px;';
 
     marker.events.register('mouseover', marker, function(event) {
+      event.target.setAttribute('src', 'marker-anim.gif');
       event.target.setAttribute('style', stupidBaseStyle + 'cursor:pointer');
     });
     marker.events.register('mouseout', marker, function() {
+      event.target.setAttribute('src', 'marker.png');
       event.target.setAttribute('style', stupidBaseStyle + 'cursor:default');
     });
 
