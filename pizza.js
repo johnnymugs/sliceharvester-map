@@ -32,12 +32,11 @@
     marker.events.register('mousedown', marker, function() {
       for (var popupIndex in map.popups) { (function(popup){ popup.destroy() })(map.popups[popupIndex]); }
 
-      var popupContent = shop.name + '<br />"' + shop.desc + '"'
-      , popup = new OpenLayers.Popup.FramedCloud(
+      var popup = new OpenLayers.Popup.FramedCloud(
         shop.name // id
         , lonLat
         , null // autocalculate size
-        , popupContent
+        , getPopupContent(shop)
         , pizzaIcon // anchor
         , true // show X close button
       );
@@ -57,5 +56,11 @@
   var stupidShop = pizzerias[0];
   var stupidLonLat = new OpenLayers.LonLat(stupidShop.lng, stupidShop.lat).transform(fromProjection, toProjection)
    map.setCenter(stupidLonLat, zoom);
+
+  function getPopupContent(shop) {
+    return '<b>' + shop.name + '</b><br />"' + shop.desc + '"' + '<br />'
+      + '<span style="font-size: 11px;">' + shop.addr + '</span><br />'
+      + '<a href="' + shop.link + '" target="_blank">Read review</a>';
+  }
 })();
 
