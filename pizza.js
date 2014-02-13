@@ -1,4 +1,6 @@
 (function(){
+  'use strict';
+
   var map = new OpenLayers.Map("mapdiv")
   , markersLayer = new OpenLayers.Layer.Markers("Markers")
   , zoom = 14
