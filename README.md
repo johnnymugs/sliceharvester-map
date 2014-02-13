@@ -10,4 +10,5 @@ Wishlist
 - Load pizzerias directly from KML
 - List of pizzerias?
 - Load HUD style from any Sliceharvster page?
+- Show ratings as pizza icons
 
