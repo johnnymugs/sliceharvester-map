@@ -16,34 +16,12 @@
     var shop = pizzerias[i]
     , lonLat = new OpenLayers.LonLat(shop.lng, shop.lat).transform(fromProjection, toProjection)
     , pizzaIcon = protoPizzaIcon.clone()
-    , marker = new OpenLayers.Marker(lonLat, pizzaIcon)
-    , stupidBaseStyle = 'position:relative;width:21px;height:25px;';
+    , marker = new OpenLayers.Marker(lonLat, pizzaIcon);
 
-    marker.events.register('mouseover', marker, function(event) {
-      event.target.setAttribute('src', 'marker-anim.gif');
-      event.target.setAttribute('style', stupidBaseStyle + 'cursor:pointer');
-    });
+    marker.events.register('mouseover', marker, mouseOverMarker);
+    marker.events.register('mouseout', marker, mouseOutMarker);
 
-    marker.events.register('mouseout', marker, function(event) {
-      event.target.setAttribute('src', 'marker.png');
-      event.target.setAttribute('style', stupidBaseStyle + 'cursor:default');
-    });
-
-    marker.events.register('mousedown', marker, function() {
-      for (var popupIndex in map.popups) { (function(popup){ popup.destroy() })(map.popups[popupIndex]); }
-
-      var popup = new OpenLayers.Popup.FramedCloud(
-        shop.name // id
-        , lonLat
-        , null // autocalculate size
-        , getPopupContent(shop)
-        , pizzaIcon // anchor
-        , true // show X close button
-      );
-      popup.maxSize = new OpenLayers.Size(250,450);
-
-      map.addPopup(popup);
-    });
+    marker.events.register('mousedown', marker, makePopupHandler(shop, lonLat, pizzaIcon));
 
     markersLayer.addMarker(marker);
     })(i);
@@ -56,6 +34,36 @@
   var stupidShop = pizzerias[0];
   var stupidLonLat = new OpenLayers.LonLat(stupidShop.lng, stupidShop.lat).transform(fromProjection, toProjection)
    map.setCenter(stupidLonLat, zoom);
+
+  return 'fuck yeah';
+
+  function makePopupHandler(shop, lonLat, anchor) {
+    return function() {
+      for (var popupIndex in map.popups) { (function(popup){ popup.destroy() })(map.popups[popupIndex]); }
+
+      var popup = new OpenLayers.Popup.FramedCloud(
+        shop.name // id
+        , lonLat
+        , null // autocalculate size
+        , getPopupContent(shop)
+        , anchor
+        , true // show X close button
+      );
+      popup.maxSize = new OpenLayers.Size(250,450);
+
+      map.addPopup(popup);
+    };
+  }
+
+  function mouseOverMarker(event) {
+    event.target.setAttribute('src', 'marker-anim.gif');
+    event.target.setAttribute('style', 'cursor:pointer;position:relative;width:' + markerSize.x + 'px;height:' + markerSize.y + 'px;');
+  }
+
+  function mouseOutMarker(event) {
+    event.target.setAttribute('src', 'marker.png');
+    event.target.setAttribute('style', 'cursor:default;position:relative;width:' + markerSize.x + 'px;height:' + markerSize.y + 'px;');
+  }
 
   function getPopupContent(shop) {
     return '<b>' + shop.name + '</b><br />"' + shop.desc + '"' + '<br />'
