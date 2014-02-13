@@ -23,7 +23,8 @@
       event.target.setAttribute('src', 'marker-anim.gif');
       event.target.setAttribute('style', stupidBaseStyle + 'cursor:pointer');
     });
-    marker.events.register('mouseout', marker, function() {
+
+    marker.events.register('mouseout', marker, function(event) {
       event.target.setAttribute('src', 'marker.png');
       event.target.setAttribute('style', stupidBaseStyle + 'cursor:default');
     });
