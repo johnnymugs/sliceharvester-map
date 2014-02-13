@@ -29,7 +29,7 @@
     marker.events.register('mousedown', marker, function() {
       for (var popupIndex in map.popups) { (function(popup){ popup.destroy() })(map.popups[popupIndex]); }
 
-      var popupContent = shop.name + '<br />' + shop.desc
+      var popupContent = shop.name + '<br />"' + shop.desc + '"'
       , popup = new OpenLayers.Popup.FramedCloud(
         shop.name // id
         , lonLat
