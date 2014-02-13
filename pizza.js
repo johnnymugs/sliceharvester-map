@@ -8,10 +8,10 @@
   , toProjection = new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
   , markerSize = new OpenLayers.Size(21,25)
   , markerOffset = new OpenLayers.Pixel(-(markerSize.w/2), -markerSize.h)
-  , protoPizzaIcon = new OpenLayers.Icon('marker.png', markerSize, markerOffset);
+  , protoPizzaIcon = new OpenLayers.Icon('marker.png', markerSize, markerOffset)
+  , pizzerias = window.pizzerias;
 
-  var i, pizzerias = window.pizzerias;
-  for (i = 0; i < pizzerias.length; i++) {
+  for (var i = 0; i < pizzerias.length; i++) {
     (function(i) {
     var shop = pizzerias[i]
     , lonLat = new OpenLayers.LonLat(shop.lng, shop.lat).transform(fromProjection, toProjection)
@@ -20,15 +20,13 @@
 
     marker.events.register('mouseover', marker, mouseOverMarker);
     marker.events.register('mouseout', marker, mouseOutMarker);
-
     marker.events.register('mousedown', marker, makePopupHandler(shop, lonLat, pizzaIcon));
 
     markersLayer.addMarker(marker);
     })(i);
   }
 
-  map.addLayer(new OpenLayers.Layer.Google("GMaps",
-    {type: google.maps.MapTypeId.ROADMAP, numZoomLevels: 20}));
+  map.addLayer(new OpenLayers.Layer.Google("GMaps", { type: google.maps.MapTypeId.ROADMAP, numZoomLevels: 20 }));
   map.addLayer(markersLayer);
 
   var stupidShop = pizzerias[0];
