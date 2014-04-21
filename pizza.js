@@ -3,6 +3,7 @@ window.goPizzaMap = function(){
 
   var map = new OpenLayers.Map("mapdiv")
   , markersLayer = new OpenLayers.Layer.Markers("Markers")
+  , tilesLayer = new OpenLayers.Layer.Google("GMaps", { type: google.maps.MapTypeId.ROADMAP, numZoomLevels: 20 })
   , zoom = 14
   , fromProjection = new OpenLayers.Projection("EPSG:4326") // Transform from WGS 1984
   , toProjection = new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator Projection
@@ -26,7 +27,12 @@ window.goPizzaMap = function(){
     })(i);
   }
 
-  map.addLayer(new OpenLayers.Layer.Google("GMaps", { type: google.maps.MapTypeId.ROADMAP, numZoomLevels: 20 }));
+  var reallyLoaded = false; // tilesloaded is called when the first and last tiles load
+  map.addLayer(tilesLayer);
+  google.maps.event.addListener(tilesLayer.mapObject, "tilesloaded", function() {
+    reallyLoaded ? console.log('wat') : reallyLoaded = true;
+  });
+
   map.addLayer(markersLayer);
 
   var timesSqLonLat = new OpenLayers.LonLat(-73.987386, 40.755166).transform(fromProjection, toProjection);
