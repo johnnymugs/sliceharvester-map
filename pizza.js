@@ -1,4 +1,4 @@
-(function(){
+window.goPizzaMap = function(){
   'use strict';
 
   var map = new OpenLayers.Map("mapdiv")
@@ -67,5 +67,10 @@
       + '<span style="font-size: 11px;">' + shop.addr + '</span><br />'
       + '<a href="' + shop.link + '" target="_blank">Read review</a>';
   }
-})();
+};
+
+window.onload = function() {
+  var link = document.getElementById('launch-map');
+  link.onclick = function(){ goPizzaMap(); };
+};
 
